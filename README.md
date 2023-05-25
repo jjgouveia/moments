@@ -2,7 +2,7 @@
 
 ### Rede social para compartilhamento de "moments" (momentos) com o mundo. A ideia é que o projeto tenha um número limitado de posts por dia, evitando a busca por likes e focando na qualidade do conteúdo.
 
-#### Ainda há uma infinidade espaço para melhorias, mas o projeto já está funcional e pronto para ser utilizado. Está sendo entregue há nivel de versão 0.0.1 e será incrementado com o tempo.
+#### Ainda há uma infinidade espaço para melhorias, mas o projeto já está funcional e pronto para ser utilizado. Está sendo entregue à nivel de versão 0.0.1 e será incrementado com o tempo.
 
 ## Tecnologias utilizadas
  * React + Vite
