@@ -1,5 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import SubmitButton from "../../components/SubmitButton";
 import { createMoment } from "../../services/moment.service";
 import { MomentFornData } from "../../types/MomentFormData";
 import "./style.css";
@@ -63,7 +64,8 @@ const MomentForm: React.FC = () => {
               />
             </div>
             <div className="cta-share-moment-container">
-              <button type="submit">Compartilhar o momento!</button>
+              {/* <Button type="submit">Compartilhar o momento!</Button> */}
+              <SubmitButton btnText="Compartilhar" />
             </div>
           </div>
         </form>

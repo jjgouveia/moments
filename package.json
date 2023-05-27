@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.13",
     "axios": "^1.4.0",
     "context": "^3.0.7",
     "react": "^18.2.0",
