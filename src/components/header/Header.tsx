@@ -7,20 +7,27 @@ import { getProfileByUserId } from "../../services/profile.service";
 import "./style.css";
 
 function Header() {
-  const token = JSON.parse(localStorage.getItem("token") || "");
   const navigate = useNavigate();
-  const { profile, setContextProfile} = useContext(ProfileContext);
+
+  const { profile, setContextProfile } = useContext(ProfileContext);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data, status } = await getProfileByUserId(token.token, token.userId);
-        if (status === 200) {
-          setContextProfile(data);
-        }
-
-        if(status === 500){
+        if (!localStorage.getItem("token")) {
           navigate("/login");
+        } else {
+          const token = JSON.parse(localStorage.getItem("token") || "");
+          const { data, status } = await getProfileByUserId(
+            token?.token,
+            token?.userId
+          );
+          if (status === 200) {
+            setContextProfile(data);
+          }
+          if (status === 500) {
+            navigate("/login");
+          }
         }
       } catch (error) {
         console.log("Error fetching profile:", error);

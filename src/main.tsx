@@ -32,6 +32,8 @@ const theme = createTheme({
 
 
           gradient: 'linear-gradient(112deg, $yellow600 -25%, $yellow600 -10%, $yellow500 80%)',
+          momentsGradient: "45deg, $yellow500 -20%, $momentsColor 100%",
+          momentsGradientVariant: 'linear-gradient(112deg, $yellow600 -25%, $yellow600 -10%, $yellow500 80%)',
           link: '#5E1DAD',
 
           // you can also create your own color

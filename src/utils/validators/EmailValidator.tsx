@@ -12,11 +12,13 @@ const EmailValidator = ({ email }: EmailValidatorProps) => {
   const helper = React.useMemo(() => {
     if (!email)
       return {
+        valid: false,
         text: "",
         color: "",
       };
     const isValid = validateEmail(email);
     return {
+      valid: isValid,
       text: isValid ? "Email válido" : "Entre com um email válido",
       color: isValid ? "success" : "error",
     };

@@ -1,9 +1,10 @@
-import { Input, Spacer } from "@nextui-org/react";
+import { Input, Spacer, Text } from "@nextui-org/react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/moments.png";
 import SubmitButton from "../../components/SubmitButton";
+import MomentsLogo from "../../components/momentsLogo/MomentsLogo";
 import { login } from "../../services/authentication.service";
 import { LoginData } from "../../types/LoginData";
 import EmailValidator from "../../utils/validators/EmailValidator";
@@ -43,20 +44,21 @@ const LoginView: React.FC = () => {
     <div className="login-container">
       <div className="login-wrapper">
         <div className="login-slogan">
-          <h1>Moments</h1>
-          <h3>Aprecie sem pressão</h3>
-          <p>
+          <MomentsLogo  size={60}/>
+          <Text h3 size={25}>Aprecie sem pressão</Text>
+          <Text>
             Em vez de incentivar o excesso de publicações que colocam pressão na
             busca pela validação dos outros, nosso desejo é promover a
             apreciação de cada <span>momento</span> que represente o melhor - ou
             o pior - do seu dia.
-          </p>
+          </Text>
         </div>
         <div className="login-form-wrapper">
           <img src={logo} alt="Moments Logo" />
           <form onSubmit={handleSubmit(onSubmit)} className="login-form">
             <Input
               clearable
+              autoComplete="true"
               status={emailValidator.color as "default" | "success" | "error"}
               color={emailValidator.color as "default" | "success" | "error"}
               helperColor={
@@ -93,6 +95,10 @@ const LoginView: React.FC = () => {
             {errors.password && <p>{errors.password.message}</p>}
             <Spacer y={1} />
             <SubmitButton
+              disabled={
+                emailValidator.color !== "success" ||
+                passwordHelper.color !== "success"
+              }
               btnText="Apreciar"
               css={{
                 width: "100%",

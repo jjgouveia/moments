@@ -1,14 +1,15 @@
 import { Button } from "@nextui-org/react";
-import { CSSProperties } from "@nextui-org/react/types/theme";
 
-import React from "react";
+import React, { CSSProperties } from "react";
 
-interface Props {
+interface Properties {
   btnText: string;
   css?: CSSProperties;
+  disabled?: boolean;
 }
 
-const SubmitButton: React.FC<Props> = ({ btnText, css }) => {
+const SubmitButton: React.FC<Properties> = ({ btnText, css, disabled, ...props }) => {
+
 
   return (
     <Button
@@ -34,7 +35,9 @@ const SubmitButton: React.FC<Props> = ({ btnText, css }) => {
           borderColor: "$primaryBorderFocus",
         },
         ...css,
+        ...props,
       }}
+      disabled={disabled}
       auto
     >
       {

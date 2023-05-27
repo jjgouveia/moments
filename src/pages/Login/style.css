@@ -32,6 +32,7 @@
 
 .login-form-wrapper {
   background-color: #f7e1a4;
+  border-radius: 15px;
   margin-left: 0;
   display: flex;
   flex-direction: column;
@@ -68,18 +69,18 @@
   margin-bottom: 1em;
 }
 
-.login-slogan h1 {
-  color: #dec129;
-  font-weight: 400;
-}
+/* .login-slogan h1 {
+  font-family: "Pacifico", cursive;
+  width: 100%;
+  text-align: center;
+} */
 
 .login-slogan h3 {
   font-weight: 400;
-  margin-top: 1em;
 }
 
 .login-slogan p {
-  font-size: 0.9em;
+  font-size: 1.2em;
   font-weight: 400;
   margin-top: 1em;
   text-align: justify;
@@ -87,8 +88,8 @@
 
 .login-slogan span {
   font-weight: 400;
-  background-color: #000000a7;
-  color: #dec129;
+  background-color: #f8d571;
+  color: #000000;
   border-radius: 2px;
   padding: 0.1rem;
 }
