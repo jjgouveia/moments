@@ -10,6 +10,7 @@
 
 html {
   box-sizing: border-box;
+  background-color: #f5f5d3;
 }
 
 a {
@@ -36,7 +37,6 @@ form [placeholder] {
 .fa-solid {
   margin-right: 0.2em;
 }
-/* You can add global styles to this file, and also import other style files */
 
 * {
   padding: 0;

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useState } from "react";
 import { InfiniteScroll } from "../../components/infiniteScroll";
-import MomentCard from "../../components/momentCard/MomentCard";
+import { Card5 } from "../../components/momentCard/CardConcept";
 import { Moment } from "../../interfaces/IMoment";
 import { getMomentsFeed } from "../../services/feed.service";
 import "./style.css";
@@ -37,6 +37,7 @@ export default function FeedView() {
         <div className="feed-container">
           <div className="moments-container">
             <ul>
+
               {feed?.length ? (
                 feed.map(
                   ({
@@ -49,17 +50,19 @@ export default function FeedView() {
                     likes,
                     comments,
                   }) => (
-                    <MomentCard
-                      key={id}
-                      id={id}
-                      title={title}
-                      description={description}
-                      user={username}
-                      date={date}
-                      imageUrl={imageUrl}
-                      likes={likes}
-                      comments={comments}
-                    />
+                    <Card5 id={id} title={title} description={description} imgUrl={imageUrl} username={username}/>
+
+                    // <MomentCard
+                    //   key={id}
+                    //   id={id}
+                    //   title={title}
+                    //   description={description}
+                    //   user={username}
+                    //   date={date}
+                    //   imageUrl={imageUrl}
+                    //   likes={likes}
+                    //   comments={comments}
+                    // />
                   )
                 )
               ) : (

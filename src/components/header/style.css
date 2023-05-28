@@ -10,6 +10,7 @@ aside {
   padding: 1em 0 0 0;
   transition: all 0.4s;
   border-right: 1px solid #777;
+  background-color: #f4e6a2;
 }
 
 aside nav {

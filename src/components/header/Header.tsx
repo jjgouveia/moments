@@ -4,6 +4,7 @@ import logo from "../../assets/moments.png";
 import profileLogo from "../../assets/profile-thumb.png";
 import { ProfileContext } from "../../context/profile/profile.context";
 import { getProfileByUserId } from "../../services/profile.service";
+import MomentsLogo from "../momentsLogo/MomentsLogo";
 import "./style.css";
 
 function Header() {
@@ -43,7 +44,7 @@ function Header() {
         <header>
           <Link to="/" className="brand">
             <img src={logo} alt="Moments" />
-            <h2>Moments</h2>
+            <MomentsLogo size={40} />
           </Link>
         </header>
         <div className="header-profile-pic-container">
