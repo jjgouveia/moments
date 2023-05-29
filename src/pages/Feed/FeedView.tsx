@@ -50,7 +50,7 @@ export default function FeedView() {
                     likes,
                     comments,
                   }) => (
-                    <Card5 id={id} title={title} description={description} imgUrl={imageUrl} username={username}/>
+                    <Card5 id={id} title={title} description={description} imgUrl={imageUrl} username={username} date={date}/>
 
                     // <MomentCard
                     //   key={id}
