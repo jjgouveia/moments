@@ -48,6 +48,7 @@ export default function MomentCard({
     });
   }, [token, user]);
 
+
   const like = async (): Promise<void> => {
     const { data, status } = await hasLiked(id);
 

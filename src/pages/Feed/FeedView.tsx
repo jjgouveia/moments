@@ -26,14 +26,14 @@ export default function FeedView() {
     <div className="home-container">
       <h1>Veja o que estão compartilhando 💛</h1>
       <div className="search-container">
-        <form>
+        {/* <form>
           <input
             type="text"
             name=""
             id=""
             placeholder="Ou busque por um momento"
           />
-        </form>
+        </form> */}
         <div className="feed-container">
           <div className="moments-container">
             <ul>
@@ -47,8 +47,6 @@ export default function FeedView() {
                     username,
                     date,
                     imageUrl,
-                    likes,
-                    comments,
                   }) => (
                     <Card5 id={id} title={title} description={description} imgUrl={imageUrl} username={username} date={date}/>
 

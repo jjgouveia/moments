@@ -1,7 +1,7 @@
+import { Avatar, Dropdown, Navbar, Link as NextLink, Text } from "@nextui-org/react";
 import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/moments.png";
-import profileLogo from "../../assets/profile-thumb.png";
 import { ProfileContext } from "../../context/profile/profile.context";
 import { getProfileByUserId } from "../../services/profile.service";
 import MomentsLogo from "../momentsLogo/MomentsLogo";
@@ -11,6 +11,19 @@ function Header() {
   const navigate = useNavigate();
 
   const { profile, setContextProfile } = useContext(ProfileContext);
+
+  const collapseItems = [
+    "Profile",
+    "Dashboard",
+    "Activity",
+    "Analytics",
+    "System",
+    "Deployments",
+    "My Settings",
+    "Team Settings",
+    "Help & Feedback",
+    "Log Out",
+  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -47,14 +60,87 @@ function Header() {
             <MomentsLogo size={40} />
           </Link>
         </header>
-        <div className="header-profile-pic-container">
-          <img
-            src={profile.profilePicture || profileLogo}
-            alt=""
-            className="header-profile-pic"
-          />
-          <p>{profile.username}</p>
-        </div>
+        <Navbar containerCss={{
+          backgroundColor: "#fbe3a1",
+          padding: "0px",
+        }}>
+        <Navbar.Content
+        className="navbar-content-avatar"
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Dropdown placement="right-top">
+            <Navbar.Item >
+              <Dropdown.Trigger css={{
+              backgroundColor: "#f8d571",
+            }}>
+                <Avatar
+                  bordered
+                  as="button"
+                  color="secondary"
+                  size="xl"
+                  src={profile.profilePicture}
+                />
+              </Dropdown.Trigger>
+            </Navbar.Item>
+            <Dropdown.Menu
+              aria-label="User menu actions"
+              color="secondary"
+              onAction={(actionKey) => console.log({ actionKey })}
+            >
+              <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                <Text b color="inherit" css={{ d: "flex" }}>
+                  Signed in as
+                </Text>
+                <Text b color="inherit" css={{ d: "flex" }}>
+                  zoey@example.com
+                </Text>
+              </Dropdown.Item>
+              <Dropdown.Item key="settings" withDivider>
+                My Settings
+              </Dropdown.Item>
+              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
+              <Dropdown.Item key="analytics" withDivider>
+                Analytics
+              </Dropdown.Item>
+              <Dropdown.Item key="system">System</Dropdown.Item>
+              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
+              <Dropdown.Item key="help_and_feedback" withDivider>
+                Help & Feedback
+              </Dropdown.Item>
+              <Dropdown.Item key="logout" withDivider color="error">
+                Log Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Navbar.Content>
+        <Navbar.Collapse>
+          {collapseItems.map((item, index) => (
+            <Navbar.CollapseItem
+              key={item}
+              activeColor="secondary"
+              css={{
+                color: index === collapseItems.length - 1 ? "$error" : "",
+              }}
+              isActive={index === 2}
+            >
+              <NextLink
+                color="inherit"
+                css={{
+                  minWidth: "100%",
+                }}
+                href="#"
+              >
+                {item}
+              </NextLink>
+            </Navbar.CollapseItem>
+          ))}
+        </Navbar.Collapse>
+        </Navbar>
         <nav>
           <ul className="links">
             <li>

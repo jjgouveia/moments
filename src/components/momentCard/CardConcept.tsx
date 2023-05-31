@@ -1,5 +1,9 @@
 import { Button, Card, Col, Collapse, Row, Text } from "@nextui-org/react";
 import "boxicons";
+import { useEffect, useState } from "react";
+import { ProfileInfo } from "../../interfaces/IProfileInfo";
+import { addLike, hasLiked, removeLike } from "../../services/like.service";
+import { getProfile } from "../../services/profile.service";
 
 export const Card5 = ({
   id,
@@ -16,33 +20,62 @@ export const Card5 = ({
   username: string;
   date: string;
 }) => {
+  const [profileInfo, setProfileInfo] = useState([] as unknown as ProfileInfo);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const data = new Date(date);
 
   const dia = data.getDate().toString().padStart(2, "0");
   const mes = (data.getMonth() + 1).toString().padStart(2, "0");
   const ano = data.getFullYear().toString().substr(-2);
 
-  const dataFormatada = `${dia}/${mes}/${ano}`;
+  const dataFormatada = `${dia} - ${mes} - ${ano}`;
   const likeId = `like-${id}`;
   const iconLike = document.getElementById(likeId);
 
+  const { token } = JSON.parse(localStorage.getItem("token") || "");
 
-  const like = () => {
-    if(iconLike?.getAttribute("type") == "solid") {
-      iconLike.setAttribute("type", "regular")
+  const like = async () => {
+    try {
+      const type = iconLike?.getAttribute("type");
+      if (type === "regular") {
+        await addLike(id);
+        iconLike?.setAttribute("type", "solid");
+      } else {
+        await removeLike(id);
+        iconLike?.setAttribute("type", "regular");
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    else {
-      iconLike?.setAttribute("type", "solid")
-    }
-
   };
 
+  useEffect(() => {
+    const getInfo = async () => getProfile(token, username);
+    getInfo().then((res) => {
+      setProfileInfo(res);
+    });
+  }, [token, username]);
+
+  useEffect(() => {
+    const hasAlreadyLiked = async () => {
+      const { data, status } = await hasLiked(id);
+
+      if (status === 200 && data === true) {
+        iconLike?.setAttribute("type", "solid");
+      }
+    };
+
+    hasAlreadyLiked();
+  }, [iconLike, id]);
 
   return (
     <Card className="moment-wrapper">
-      <Card css={{ w: "400px", h: "fit-content", backgroundColor: "#f5f5d3" }} key={id}>
-      <Card.Header
+      <Card
+        css={{ w: "400px", h: "fit-content", backgroundColor: "#f5f5d3" }}
+        key={id}
+      >
+        <Card.Header
           isBlurred
           css={{
             position: "relative",
@@ -53,14 +86,14 @@ export const Card5 = ({
         >
           <Row>
             <Col>
-              <Row css={{alignItems: "center"}}>
+              <Row css={{ alignItems: "center" }}>
                 <Col span={2}>
                   <Card.Image
-                    src="https://nextui.org/images/breathing-app-icon.jpeg"
+                    src={profileInfo?.profilePicture}
                     css={{ bg: "black", br: "50%" }}
                     height={40}
                     width={40}
-                    alt="Breathing app icon"
+                    alt={username + " profile picture"}
                   />
                 </Col>
                 <Col>
@@ -73,37 +106,8 @@ export const Card5 = ({
                 </Col>
               </Row>
             </Col>
-            {/* <Col>
-              <Row justify="flex-end">
-                <Button
-                  flat
-                  auto
-                  rounded
-                  css={{ color: "#94f9f0", bg: "#94f9f026" }}
-                >
-                  <Text
-                    css={{ color: "inherit" }}
-                    size={12}
-                    weight="bold"
-                    transform="uppercase"
-                  >
-                    Ir ao Momento
-                  </Text>
-                </Button>
-              </Row>
-            </Col> */}
           </Row>
         </Card.Header>
-        {/* <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-          <Col>
-            <Text size={12} weight="bold" transform="uppercase" color="#9E9E9E">
-              {title}
-            </Text>
-            <Text h3 color="white">
-              {description}
-            </Text>
-          </Col>
-        </Card.Header> */}
         <Card.Body css={{ p: 0 }}>
           <Card.Image
             src={imgUrl}
@@ -120,36 +124,20 @@ export const Card5 = ({
             position: "relative",
             bgBlur: "#0f111466",
             borderTop: "$borderWeights$light solid $gray800",
-            bottom: 56,
+            bottom: 52,
             zIndex: 1,
+            borderRadius: "0 0 10px 10px",
           }}
         >
           <Row>
-            {/* <Col>
-              <Row>
-                <Col span={5}>
-                  <Card.Image
-                    src="https://nextui.org/images/breathing-app-icon.jpeg"
-                    css={{ bg: "black", br: "50%" }}
-                    height={40}
-                    width={40}
-                    alt="Breathing app icon"
-                  />
-                </Col>
-                <Col>
-                  <Text color="#d1d1d1" size={12}>
-                    {username}
-                  </Text>
-                  <Text color="#d1d1d1" size={12}>
-                    {dataFormatada}
-                  </Text>
-                </Col>
-              </Row>
-            </Col> */}
-
             <Col>
               <Row justify="center">
-                <Button flat auto css={{ color: "#94f9f0", bg: "#94f9f026" }} onPress={like}>
+                <Button
+                  flat
+                  auto
+                  css={{ color: "#94f9f0", bg: "#94f9f026" }}
+                  onPress={like}
+                >
                   <box-icon
                     id={likeId}
                     type="regular"
@@ -163,11 +151,11 @@ export const Card5 = ({
             </Col>
             <Col>
               <Row justify="center">
-                <Button flat auto css={{ color: "#94f9f0", bg: "#94f9f026" }} onPress={like}>
+                <Button flat auto css={{ color: "#94f9f0", bg: "#94f9f026" }}>
                   <box-icon
                     id={likeId}
                     type="regular"
-                    name="heart"
+                    name="comment"
                     color="#dec129"
                     background="#dec129"
                     animation="tada-hover"
@@ -197,7 +185,12 @@ export const Card5 = ({
             </Col>
           </Row>
         </Card.Footer>
-        <Collapse title="Mais" css={{ marginTop: "-52px", pl: "15px" }}>
+        <Collapse
+          subtitle={title}
+          css={{ marginTop: "-65px", pl: "15px", zIndex: -2 }}
+          divider={false}
+          shadow
+        >
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
       </Card>

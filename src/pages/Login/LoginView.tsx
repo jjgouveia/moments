@@ -44,7 +44,7 @@ const LoginView: React.FC = () => {
     <div className="login-container">
       <div className="login-wrapper">
         <div className="login-slogan">
-          <MomentsLogo  size={60}/>
+          <MomentsLogo  size={52}/>
           <Text h3 size={25}>Aprecie sem pressão</Text>
           <Text>
             Em vez de incentivar o excesso de publicações que colocam pressão na
