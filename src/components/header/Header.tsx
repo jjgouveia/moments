@@ -57,7 +57,9 @@ function Header() {
         <header>
           <Link to="/" className="brand">
             <img src={logo} alt="Moments" />
+            <div className="moments-logo-header">
             <MomentsLogo size={40} />
+            </div>
           </Link>
         </header>
         <Navbar containerCss={{

@@ -1,25 +1,25 @@
+import { Button, Modal, Text } from "@nextui-org/react";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Modal from "react-modal";
 import { IComment } from "../../interfaces/IComment";
+import { ICommentResponse } from "../../interfaces/ICommentReponse";
 import { createComment } from "../../services/comment.service";
-import "./styles.css";
-
-Modal.setAppElement("#root");
+import CommentCard from "../commentCard";
 
 interface CommentModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  comentList: Array<object>;
+  comentList: Array<ICommentResponse>;
   momentId: string;
 }
 
 const CommentModal: React.FC<CommentModalProps> = ({
-  isOpen,
-  onClose,
   comentList,
   momentId,
 }) => {
+  const [visible, setVisible] = React.useState(false);
+  const handler = () => setVisible(true);
+  const closeHandler = () => {
+    setVisible(false);
+  };
   const {
     register,
     handleSubmit,
@@ -32,50 +32,65 @@ const CommentModal: React.FC<CommentModalProps> = ({
     setComments([...comments, data]);
   };
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: IComment) => {
     onSubmit(data);
   };
-
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      contentLabel="Modal de Comentários"
-      closeTimeoutMS={300}
-      className="modal"
-      overlayClassName="modal-overlay"
-    >
-      <h2>Comentar: </h2>
-      <form
-        onSubmit={handleSubmit(handleFormSubmit)}
-        encType="multipart/form-data"
+    <div>
+      <Button
+        flat
+        auto
+        css={{ color: "#94f9f0", bg: "#94f9f026" }}
+        onPress={handler}
       >
-        <textarea
-          className="modal-comment-input"
-          {...register("content", { required: "Este campo é obrigatório" })}
-          placeholder="Digite seu comentário"
-        ></textarea>
-        <span>{errors.content && errors.content.message}</span>
-        <div className="buttons">
-          <button type="submit">Publicar</button>
-          <button type="button" onClick={onClose}>
-            Fechar
-          </button>
-        </div>
-      </form>
-      <div className="modal-comment-container">
-        <ul>
-        {comments?.map((coment: any) => (
+        <box-icon
+          type="regular"
+          name="comment"
+          color="#dec129"
+          background="#dec129"
+          animation="tada-hover"
+        >{comments.length}</box-icon>
+      </Button>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            Comentários:
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            onSubmit={handleSubmit(handleFormSubmit)}
+            encType="multipart/form-data"
+          >
+            <textarea
+            style={{width: '78%', resize: 'none', height: '100px', overflowY: 'auto', color: '#000000'}}
+              className="modal-comment-input"
+              {...register("content", { required: "Este campo é obrigatório" })}
+              placeholder="Digite seu comentário"
+            ></textarea>
+            <span>{errors.content && errors.content.message}</span>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto type="submit" onPress={handleSubmit(handleFormSubmit)}>
+            Publicar
+          </Button>
+        </Modal.Footer>
+        <div className="modal-comment-container">
+        {comments?.map((coment: ICommentResponse) => (
           <li key={coment.id}>
-            <div>
-              <p>{coment.content}</p>
-              <p>{coment.userId}</p>
-            </div>
+            <CommentCard {...coment} />
           </li>
         ))}
-        </ul>
       </div>
-    </Modal>
+
+      </Modal>
+    </div>
   );
 };
 

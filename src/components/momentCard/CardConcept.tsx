@@ -6,8 +6,9 @@ import { ICommentResponse } from "../../interfaces/ICommentReponse";
 import { ProfileInfo } from "../../interfaces/IProfileInfo";
 import { addLike, hasLiked, removeLike } from "../../services/like.service";
 import { getProfile } from "../../services/profile.service";
-import CommentsToShow from "../commentsToShow";
-import NewCommentModal from "../modal/newCommentModal";
+import CommentModal from "../commentModal";
+import PreviewComments from "../previewComments/index";
+
 
 export const Card5 = ({
   id,
@@ -27,7 +28,7 @@ export const Card5 = ({
   comments: Array<ICommentResponse>;
 }) => {
   const [profileInfo, setProfileInfo] = useState([] as unknown as ProfileInfo);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const data = new Date(date);
@@ -238,7 +239,7 @@ export const Card5 = ({
             </Col>
             <Col>
               <Row justify="center">
-                <NewCommentModal comentList={comments} momentId={id} />
+                <CommentModal comentList={comments} momentId={id} />
               </Row>
             </Col>
 
@@ -272,7 +273,7 @@ export const Card5 = ({
         >
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
-        <CommentsToShow commentList={comments} />
+        <PreviewComments commentList={comments} />
       </Card>
     </Card>
   );

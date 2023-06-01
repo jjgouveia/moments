@@ -6,7 +6,7 @@ interface CommentsToShowProps {
   commentList: Array<ICommentResponse>;
 }
 
-const CommentsToShow: React.FC<CommentsToShowProps> = ({ commentList }) => {
+const PreviewComments: React.FC<CommentsToShowProps> = ({ commentList }) => {
   const commentsToShow = commentList
     .sort((a: ICommentResponse, b: ICommentResponse) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -57,4 +57,4 @@ const CommentsToShow: React.FC<CommentsToShowProps> = ({ commentList }) => {
   );
 };
 
-export default CommentsToShow;
+export default PreviewComments;
