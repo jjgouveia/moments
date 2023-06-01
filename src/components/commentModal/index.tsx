@@ -64,6 +64,7 @@ const CommentModal: React.FC<CommentModalProps> = ({
         </div>
       </form>
       <div className="modal-comment-container">
+        <ul>
         {comments?.map((coment: any) => (
           <li key={coment.id}>
             <div>
@@ -72,6 +73,7 @@ const CommentModal: React.FC<CommentModalProps> = ({
             </div>
           </li>
         ))}
+        </ul>
       </div>
     </Modal>
   );

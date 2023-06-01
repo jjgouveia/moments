@@ -37,7 +37,6 @@ export default function FeedView() {
         <div className="feed-container">
           <div className="moments-container">
             <ul>
-
               {feed?.length ? (
                 feed.map(
                   ({
@@ -47,8 +46,17 @@ export default function FeedView() {
                     username,
                     date,
                     imageUrl,
+                    comments,
                   }) => (
-                    <Card5 id={id} title={title} description={description} imgUrl={imageUrl} username={username} date={date}/>
+                    <Card5
+                      id={id}
+                      title={title}
+                      description={description}
+                      imgUrl={imageUrl}
+                      username={username}
+                      date={date}
+                      comments={comments}
+                    />
 
                     // <MomentCard
                     //   key={id}
@@ -66,7 +74,9 @@ export default function FeedView() {
               ) : (
                 <p>Carregando...</p>
               )}
-              <InfiniteScroll callback={()=> setCurrentPage((prevPage) => prevPage + 1)} />
+              <InfiniteScroll
+                callback={() => setCurrentPage((prevPage) => prevPage + 1)}
+              />
             </ul>
           </div>
         </div>

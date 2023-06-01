@@ -1,9 +1,13 @@
 import { Button, Card, Col, Collapse, Row, Text } from "@nextui-org/react";
 import "boxicons";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ICommentResponse } from "../../interfaces/ICommentReponse";
 import { ProfileInfo } from "../../interfaces/IProfileInfo";
 import { addLike, hasLiked, removeLike } from "../../services/like.service";
 import { getProfile } from "../../services/profile.service";
+import CommentsToShow from "../commentsToShow";
+import NewCommentModal from "../modal/newCommentModal";
 
 export const Card5 = ({
   id,
@@ -12,6 +16,7 @@ export const Card5 = ({
   imgUrl,
   username,
   date,
+  comments,
 }: {
   id: string;
   title: string;
@@ -19,17 +24,41 @@ export const Card5 = ({
   imgUrl: string;
   username: string;
   date: string;
+  comments: Array<ICommentResponse>;
 }) => {
   const [profileInfo, setProfileInfo] = useState([] as unknown as ProfileInfo);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const data = new Date(date);
 
-  const dia = data.getDate().toString().padStart(2, "0");
-  const mes = (data.getMonth() + 1).toString().padStart(2, "0");
-  const ano = data.getFullYear().toString().substr(-2);
+  // const dia = data.getDate().toString().padStart(2, "0");
+  // const mes = (data.getMonth() + 1).toString().padStart(2, "0");
+  // const ano = data.getFullYear().toString().substr(-2);
 
-  const dataFormatada = `${dia} - ${mes} - ${ano}`;
+  // const dataFormatada = `${dia} - ${mes} - ${ano}`;
+
+
+
+  const timeHasPassed = (date: Date) => {
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / 60000);
+
+    if (diffInMinutes === 0) {
+      return "Agora";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes} minutos atrás`;
+    } else if (diffInMinutes < 1440) {
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      if (diffInHours === 1) return `${diffInHours} hora atrás`;
+      return `${diffInHours} horas atrás`;
+    } else {
+      const diffInDays = Math.floor(diffInMinutes / 1440);
+      if (diffInDays === 1) return `${diffInDays} dia atrás`;
+      return `${diffInDays} dias atrás`;
+    }
+  };
+
   const likeId = `like-${id}`;
   const iconLike = document.getElementById(likeId);
 
@@ -50,6 +79,13 @@ export const Card5 = ({
     }
   };
 
+  const goToMoment = (momentId: string) => {
+    navigate(`/moment/${momentId}`);
+  };
+
+
+
+
   useEffect(() => {
     const getInfo = async () => getProfile(token, username);
     getInfo().then((res) => {
@@ -69,6 +105,14 @@ export const Card5 = ({
     hasAlreadyLiked();
   }, [iconLike, id]);
 
+  // const handleOpenModal = () => {
+  //   setModalIsOpen(true);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setModalIsOpen(false);
+  // };
+
   return (
     <Card className="moment-wrapper">
       <Card
@@ -81,7 +125,7 @@ export const Card5 = ({
             position: "relative",
             bgBlur: "#0f111466",
             zIndex: 1,
-            h: "60px",
+            h: "50px",
           }}
         >
           <Row>
@@ -96,12 +140,54 @@ export const Card5 = ({
                     alt={username + " profile picture"}
                   />
                 </Col>
-                <Col>
-                  <Text color="#000000" size={15}>
-                    {username}
-                  </Text>
-                  <Text color="#000000" size={15}>
-                    {dataFormatada}
+                <Col
+                  css={{
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    marginLeft: "5px",
+                    height: "50px",
+                  }}
+                >
+                  <Row
+                    css={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-around",
+                      height: "100%",
+                      width: "fit-content",
+                    }}
+                  >
+                    <Text
+                      color="#000000"
+                      size={13}
+                      css={{
+                        fontWeight: "bold",
+                        height: "18px",
+                      }}
+                    >
+                      {profileInfo?.name}
+                    </Text>
+                    <Text
+                      color="#000000"
+                      size={13}
+                      css={{
+                        fontWeight: "600",
+                      }}
+                    >
+                      {username}
+                    </Text>
+                  </Row>
+                  <Text
+                    color="#000000"
+                    size={13}
+                    css={{
+                      marginLeft: "auto",
+                      width: "fit-content",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {timeHasPassed(data)}
                   </Text>
                 </Col>
               </Row>
@@ -124,9 +210,10 @@ export const Card5 = ({
             position: "relative",
             bgBlur: "#0f111466",
             borderTop: "$borderWeights$light solid $gray800",
-            bottom: 52,
+            bottom: 50,
             zIndex: 1,
-            borderRadius: "0 0 10px 10px",
+            borderRadius: "0 0 5px 5px",
+            h: "55px",
           }}
         >
           <Row>
@@ -151,16 +238,7 @@ export const Card5 = ({
             </Col>
             <Col>
               <Row justify="center">
-                <Button flat auto css={{ color: "#94f9f0", bg: "#94f9f026" }}>
-                  <box-icon
-                    id={likeId}
-                    type="regular"
-                    name="comment"
-                    color="#dec129"
-                    background="#dec129"
-                    animation="tada-hover"
-                  ></box-icon>
-                </Button>
+                <NewCommentModal comentList={comments} momentId={id} />
               </Row>
             </Col>
 
@@ -171,6 +249,7 @@ export const Card5 = ({
                   auto
                   rounded
                   css={{ color: "#94f9f0", bg: "#94f9f026" }}
+                  onPress={() => goToMoment(id)}
                 >
                   <Text
                     css={{ color: "inherit" }}
@@ -186,13 +265,14 @@ export const Card5 = ({
           </Row>
         </Card.Footer>
         <Collapse
-          subtitle={title}
+          title={title}
           css={{ marginTop: "-65px", pl: "15px", zIndex: -2 }}
           divider={false}
           shadow
         >
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
+        <CommentsToShow commentList={comments} />
       </Card>
     </Card>
   );
