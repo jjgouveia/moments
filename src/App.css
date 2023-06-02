@@ -5,7 +5,7 @@
   transition: all 0.4s;
   background-color: #f2e7ca;
   position: relative;
-  top: -115px;
+  margin-top: -355px;
 }
 
 @media (width < 920px) {
@@ -18,7 +18,6 @@
 @media (width > 397px) {
   .container {
     transition: padding 0.4s;
-    margin-top: -240px;
   }
 }
 

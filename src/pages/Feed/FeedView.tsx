@@ -37,7 +37,7 @@ export default function FeedView() {
         <div className="feed-container">
           <div className="moments-container">
             <ul>
-              {feed?.length ? (
+              {
                 feed.map(
                   ({
                     id,
@@ -71,9 +71,7 @@ export default function FeedView() {
                     // />
                   )
                 )
-              ) : (
-                <p>Carregando...</p>
-              )}
+              }
               <InfiniteScroll
                 callback={() => setCurrentPage((prevPage) => prevPage + 1)}
               />

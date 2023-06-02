@@ -1,3 +1,4 @@
+import ImgCrop from 'antd-img-crop';
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Modal from "react-modal";
@@ -10,6 +11,7 @@ Modal.setAppElement("#root");
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  actualProfilePicturePreview: string;
   initialData: IUpdateProfile;
 }
 
@@ -17,6 +19,7 @@ const EditProfileModal: React.FC<Props> = ({
   isOpen,
   onClose,
   initialData,
+  actualProfilePicturePreview,
 }) => {
   const {
     register,
@@ -41,6 +44,9 @@ const EditProfileModal: React.FC<Props> = ({
 
 
   };
+
+  console.log(actualProfilePicturePreview);
+
 
 
   const handleFileChange = () => {
@@ -96,10 +102,10 @@ const EditProfileModal: React.FC<Props> = ({
         <form onSubmit={handleSubmit(handleSubmitForm)} encType="multipart/form-data" >
           <div className="update-form-photo-preview-container">
             {!profilePicturePreview ? (
-              <div className="thumb-photo-preview"></div>
+              <img src={actualProfilePicturePreview} alt="Preview" style={{ maxWidth: "100px", maxHeight: "100px" }} />
             ) : (
               <img
-                src={profilePicturePreview || initialData.image}
+                src={actualProfilePicturePreview}
                 alt="Preview"
                 style={{ maxWidth: "100px", maxHeight: "100px" }}
               />
@@ -129,7 +135,7 @@ const EditProfileModal: React.FC<Props> = ({
               </label>
               <label>
                 Aniversário:
-                <input type="text" {...register("birthday", {
+                <input type="date" {...register("birthday", {
                   required: "Campo obrigatório",
                 })} />
               </label>
@@ -144,6 +150,7 @@ const EditProfileModal: React.FC<Props> = ({
             <div className="update-form-input-wrapper">
               <label>
                 Foto de Perfil:
+                <ImgCrop rotationSlider>
                 <input
                   type="file"
                   accept="image/*"
@@ -151,6 +158,7 @@ const EditProfileModal: React.FC<Props> = ({
                   onChange={handleFileChange}
                   ref={fileInputRef}
                 />
+                </ImgCrop>
               </label>
             </div>
           </div>

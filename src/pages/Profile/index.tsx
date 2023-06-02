@@ -64,7 +64,7 @@ const Profile: React.FC = () => {
             </div>
           </button>
         </div>
-        <CustomModal isOpen={modalIsOpen} onClose={handleCloseModal} initialData={profile as unknown as IUpdateProfile} />
+        <CustomModal isOpen={modalIsOpen} onClose={handleCloseModal} initialData={profile as unknown as IUpdateProfile} actualProfilePicturePreview={profile.profilePicture} />
 
         <div className="profile-header">
           <img

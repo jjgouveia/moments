@@ -1,4 +1,5 @@
 import { Button, Card, Col, Collapse, Row, Text } from "@nextui-org/react";
+import { Skeleton } from "antd";
 import "boxicons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,7 @@ export const Card5 = ({
   comments: Array<ICommentResponse>;
 }) => {
   const [profileInfo, setProfileInfo] = useState([] as unknown as ProfileInfo);
+  const [cardLoaded, setCardLoaded] = useState(false);
   // const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -91,6 +93,7 @@ export const Card5 = ({
     const getInfo = async () => getProfile(token, username);
     getInfo().then((res) => {
       setProfileInfo(res);
+      setCardLoaded(true);
     });
   }, [token, username]);
 
@@ -116,7 +119,7 @@ export const Card5 = ({
 
   return (
     <Card className="moment-wrapper">
-      <Card
+      { cardLoaded ? (<Card
         css={{ w: "400px", h: "fit-content", backgroundColor: "#f5f5d3" }}
         key={id}
       >
@@ -274,7 +277,7 @@ export const Card5 = ({
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
         <PreviewComments commentList={comments} />
-      </Card>
+      </Card>) : (<Skeleton active avatar paragraph={{rows: 5}}/>)}
     </Card>
   );
 };

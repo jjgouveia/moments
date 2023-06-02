@@ -1,5 +1,7 @@
+import { notification } from "antd";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import ToastHands from "../../assets/toast-hands.svg";
 import SubmitButton from "../../components/SubmitButton";
 import { createMoment } from "../../services/moment.service";
 import { MomentFornData } from "../../types/MomentFormData";
@@ -7,13 +9,30 @@ import "./style.css";
 
 const MomentForm: React.FC = () => {
   const { register, handleSubmit, setValue } = useForm<MomentFornData>();
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = () => {
+    api.open({
+      message: 'Cheers!',
+      description:
+        'Momento registrado com sucesso!',
+      icon: <img src={ToastHands} alt="Toast Hands" style={{width: "28px"}} />,
+      placement: 'topRight',
+      style: {
+        color: "#000000",
+        boxShadow: "0px 0px 5px 0px #000000",
+        height: "fit-content",
+        width: "fit-content",
+      },
+    });
+  };
 
   const onSubmit: SubmitHandler<MomentFornData> = async (data) => {
     const { token } = JSON.parse(localStorage.getItem("token") || "{}");
     const { status } = await createMoment(token, data);
 
     if(status === 201) {
-      alert("Momento criado com sucesso!");
+      openNotification();
     }
   };
 
@@ -21,6 +40,8 @@ const MomentForm: React.FC = () => {
   const [previewImage, setPreviewImage] = React.useState<string | undefined>(
     undefined
   );
+
+
 
   const handleFileChange = () => {
     const file = fileInputRef.current?.files?.[0];
@@ -38,6 +59,7 @@ const MomentForm: React.FC = () => {
 
   return (
     <div className="new-moment-container">
+          {contextHolder}
       <h1>Compartilhe um momento!</h1>
       <div className="form-data-container">
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -64,7 +86,6 @@ const MomentForm: React.FC = () => {
               />
             </div>
             <div className="cta-share-moment-container">
-              {/* <Button type="submit">Compartilhar o momento!</Button> */}
               <SubmitButton btnText="Compartilhar" />
             </div>
           </div>
