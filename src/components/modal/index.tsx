@@ -41,12 +41,7 @@ const EditProfileModal: React.FC<Props> = ({
     if (status === 200) {
       alert("Perfil atualizado com sucesso!");
     }
-
-
   };
-
-  console.log(actualProfilePicturePreview);
-
 
 
   const handleFileChange = () => {
