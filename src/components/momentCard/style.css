@@ -9,11 +9,21 @@
   justify-content: center;
 }
 
+:where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-first,
+:where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-second {
+  color: rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+:where(.css-dev-only-do-not-override-3hfdvs).ant-card .ant-card-body {
+  padding: 0;
+}
+
 .moment-wrapper {
   display: flex;
   width: 400px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
-
   margin: 0 auto;
   margin-bottom: 1em;
 }

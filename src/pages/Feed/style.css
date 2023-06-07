@@ -1,25 +1,14 @@
 .home-container {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-left: auto;
+  padding: 0 auto;
 }
 
 .home-container h1 {
   display: inline-block;
   width: 100%;
   text-align: center;
-}
-
-.search-container {
-  margin-bottom: 1.5em;
-  width: 100%;
-}
-
-.search-container form {
-  width: 30%;
-  position: relative;
 }
 
 .search-container input {
@@ -29,7 +18,12 @@
 }
 
 .feed-container {
-  padding-top: 1.5em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 80%;
+  overflow: hidden;
 }
 
 li {

@@ -1,5 +1,5 @@
 import { Button, Card, Col, Collapse, Row, Text } from "@nextui-org/react";
-import { Skeleton } from "antd";
+import { Card as AntdCard, Image, List, Skeleton } from "antd";
 import "boxicons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,18 +30,10 @@ export const Card5 = ({
 }) => {
   const [profileInfo, setProfileInfo] = useState([] as unknown as ProfileInfo);
   const [cardLoaded, setCardLoaded] = useState(false);
-  // const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const data = new Date(date);
-
-  // const dia = data.getDate().toString().padStart(2, "0");
-  // const mes = (data.getMonth() + 1).toString().padStart(2, "0");
-  // const ano = data.getFullYear().toString().substr(-2);
-
-  // const dataFormatada = `${dia} - ${mes} - ${ano}`;
-
-
 
   const timeHasPassed = (date: Date) => {
     const now = new Date();
@@ -118,6 +110,7 @@ export const Card5 = ({
   // };
 
   return (
+    <List>
     <Card className="moment-wrapper">
       { cardLoaded ? (<Card
         css={{ w: "400px", h: "fit-content", backgroundColor: "#f5f5d3" }}
@@ -199,13 +192,15 @@ export const Card5 = ({
           </Row>
         </Card.Header>
         <Card.Body css={{ p: 0 }}>
-          <Card.Image
-            src={imgUrl}
-            objectFit="cover"
-            width="100%"
-            height="100%"
-            alt={title}
-            zIndex={2}
+          <AntdCard
+            hoverable
+            cover={<Image src={imgUrl} alt="moment" fallback="https://via.placeholder.com/400" style={
+              {
+                borderRadius: "0",
+              }
+            }
+            preview={false}
+            />}
           />
         </Card.Body>
         <Card.Footer
@@ -214,7 +209,7 @@ export const Card5 = ({
             position: "relative",
             bgBlur: "#0f111466",
             borderTop: "$borderWeights$light solid $gray800",
-            bottom: 50,
+            bottom: 54,
             zIndex: 1,
             borderRadius: "0 0 5px 5px",
             h: "55px",
@@ -270,14 +265,15 @@ export const Card5 = ({
         </Card.Footer>
         <Collapse
           title={title}
-          css={{ marginTop: "-65px", pl: "15px", zIndex: -2 }}
+          css={{ marginTop: "-65px", pl: "15px", zIndex: -2}}
           divider={false}
           shadow
         >
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
-        <PreviewComments commentList={comments} />
+        <PreviewComments commentList={comments} isFeedPreview={true} />
       </Card>) : (<Skeleton active avatar paragraph={{rows: 5}}/>)}
     </Card>
+    </List>
   );
 };

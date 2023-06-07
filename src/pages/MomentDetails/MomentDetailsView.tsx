@@ -1,6 +1,9 @@
+import { HeartFilled } from "@ant-design/icons";
+import { Card, Image, Rate } from "antd";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import PreviewComments from "../../components/previewComments";
 import { Moment } from "../../interfaces/IMoment";
 import { ProfileInfo } from "../../interfaces/IProfileInfo";
 import { getMomentById } from "../../services/moment.service";
@@ -12,6 +15,12 @@ import "./style.css";
 export default function MomentDetailsView() {
   const [moment, setMoment] = useState({} as Moment);
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({} as ProfileInfo);
+
+  const handleHearts = (n: number) => {
+    console.log("heart ", n);
+
+  };
+
 
   const { id } = useParams();
   const { token } = JSON.parse(localStorage.getItem("token") || "");
@@ -27,8 +36,6 @@ export default function MomentDetailsView() {
     try {
       const p = async () => getProfileByUserId(token, moment.userId);
       p().then((res) => {
-        console.log(res.data);
-
         setProfileInfo(res.data);
       });
     } catch (error) {
@@ -38,8 +45,20 @@ export default function MomentDetailsView() {
 
   return (
     <div className="moment-details-container">
+      <Card
+      hoverable
+      style={{ maxWidth: 400 }}
+      cover={<Image
+        src={moment.imageUrl}
+        fallback="https://via.placeholder.com/400"
+        />}
+      >
       <h2>{moment.title}</h2>
-      <img src={moment.imageUrl} alt="" />
+      <Rate
+        character={
+            <HeartFilled style={{ fontSize: "36px"}} />}
+          onChange={handleHearts} style={{color: "#F5A524"}} />
+      </Card>
       <div className="about-moment">
         <div className="moment-details-user-info-container">
           <div className="moment-details-user-info-wrapper">
@@ -63,6 +82,7 @@ export default function MomentDetailsView() {
         </div>
         <h4>{moment.description}</h4>
       </div>
+      <PreviewComments commentList={moment.comments} />
     </div>
   );
 }

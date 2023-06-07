@@ -5,6 +5,7 @@ import logo from "../../assets/moments.png";
 import { ProfileContext } from "../../context/profile/profile.context";
 import { getProfileByUserId } from "../../services/profile.service";
 import MomentsLogo from "../momentsLogo/MomentsLogo";
+import NewMomentDrawer from "../newMomentDrawer";
 import "./style.css";
 
 function Header() {
@@ -145,6 +146,9 @@ function Header() {
         </Navbar>
         <nav>
           <ul className="links">
+            <li>
+              <NewMomentDrawer />
+            </li>
             <li>
               <Link to="/">
                 <div className="header-button-wrapper">

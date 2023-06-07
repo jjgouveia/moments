@@ -4,14 +4,25 @@ import CommentCard from "../commentCard";
 
 interface CommentsToShowProps {
   commentList: Array<ICommentResponse>;
+  isFeedPreview?: boolean;
 }
 
-const PreviewComments: React.FC<CommentsToShowProps> = ({ commentList }) => {
-  const commentsToShow = commentList
-    .sort((a: ICommentResponse, b: ICommentResponse) => {
+const PreviewComments: React.FC<CommentsToShowProps> = ({ commentList, isFeedPreview=false }) => {
+
+  let commentsToShow = Array<ICommentResponse>();
+
+  if (isFeedPreview) {
+    commentsToShow = commentList
+    ?.sort((a: ICommentResponse, b: ICommentResponse) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     })
     .slice(0, 2);
+  } else {
+    commentsToShow = commentList
+    ?.sort((a: ICommentResponse, b: ICommentResponse) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }
 
   return (
     <Row
