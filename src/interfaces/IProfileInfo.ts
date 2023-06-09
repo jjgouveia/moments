@@ -3,4 +3,5 @@ export interface ProfileInfo {
     id: number;
     username: string;
     profilePicture: string;
+    name: string;
 }

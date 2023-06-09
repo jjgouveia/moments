@@ -2,7 +2,7 @@ import { IUser } from "../interfaces/IUser";
 import { ResponseFormat } from "../interfaces/ResponseFormat";
 import axiosHandler from "./axios";
 
-export async function getUserByUserId(token: string, userId: string) {
+export async function getUserByUserId(token: string, userId: string): Promise<ResponseFormat<IUser>> {
     try {
         const { data, status } = await axiosHandler.get(`/user/id/${userId}`, {
             headers: {
@@ -17,7 +17,10 @@ export async function getUserByUserId(token: string, userId: string) {
             status,
         };
     } catch (error) {
-        return error;
+        return {
+            data: "" as unknown as IUser,
+            status: 500,
+        };
     }
 }
 

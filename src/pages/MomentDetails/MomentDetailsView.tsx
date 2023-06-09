@@ -1,7 +1,11 @@
+import { HeartFilled } from "@ant-design/icons";
+import { Card, Image, Rate } from "antd";
+import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import PreviewComments from "../../components/previewComments";
 import { Moment } from "../../interfaces/IMoment";
-import { IProfile } from "../../interfaces/IProfile";
+import { ProfileInfo } from "../../interfaces/IProfileInfo";
 import { getMomentById } from "../../services/moment.service";
 import { getProfileByUserId } from "../../services/profile.service";
 import "./style.css";
@@ -10,10 +14,16 @@ import "./style.css";
 
 export default function MomentDetailsView() {
   const [moment, setMoment] = useState({} as Moment);
-  const [profileInfo, setProfileInfo] = useState({} as IProfile);
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo>({} as ProfileInfo);
+
+  const handleHearts = (n: number) => {
+    console.log("heart ", n);
+
+  };
+
 
   const { id } = useParams();
-  const { token, userId } = JSON.parse(localStorage.getItem("token") || "");
+  const { token } = JSON.parse(localStorage.getItem("token") || "");
 
   useEffect(() => {
     const t = async () => getMomentById(token, id!);
@@ -24,25 +34,38 @@ export default function MomentDetailsView() {
 
   useEffect(() => {
     try {
-      const t = async () => getProfileByUserId(token, userId!);
-      t().then((res) => {
-        setProfileInfo(res);
+      const p = async () => getProfileByUserId(token, moment.userId);
+      p().then((res) => {
+        setProfileInfo(res.data);
       });
     } catch (error) {
       console.log(error);
     }
-
-
-  }, [token, userId]);
+  }, [moment.userId, token]);
 
   return (
     <div className="moment-details-container">
+      <Card
+      hoverable
+      style={{ maxWidth: 400 }}
+      cover={<Image
+        src={moment.imageUrl}
+        fallback="https://via.placeholder.com/400"
+        />}
+      >
       <h2>{moment.title}</h2>
-      <img src={moment.imageUrl} alt="" />
+      <Rate
+        character={
+            <HeartFilled style={{ fontSize: "36px"}} />}
+          onChange={handleHearts} style={{color: "#F5A524"}} />
+      </Card>
       <div className="about-moment">
         <div className="moment-details-user-info-container">
           <div className="moment-details-user-info-wrapper">
-          <img src={profileInfo.profilePicture} alt="" className=""/>
+          {
+          profileInfo?.profilePicture ?
+          (<img src={profileInfo.profilePicture} alt="" className=""/>)
+          : (<SkeletonAvatar active size="small" />)}
             <p>{moment.username}</p>
           </div>
           <div className="moment-details-post-actions">
@@ -59,6 +82,7 @@ export default function MomentDetailsView() {
         </div>
         <h4>{moment.description}</h4>
       </div>
+      <PreviewComments commentList={moment.comments} />
     </div>
   );
 }

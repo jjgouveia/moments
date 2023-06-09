@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useState } from "react";
 import { InfiniteScroll } from "../../components/infiniteScroll";
-import MomentCard from "../../components/momentCard/MomentCard";
+import { Card5 } from "../../components/momentCard/CardConcept";
 import { Moment } from "../../interfaces/IMoment";
 import { getMomentsFeed } from "../../services/feed.service";
 import "./style.css";
@@ -24,20 +24,11 @@ export default function FeedView() {
 
   return (
     <div className="home-container">
-      <h1>Veja o que estão compartilhando 💛</h1>
-      <div className="search-container">
-        <form>
-          <input
-            type="text"
-            name=""
-            id=""
-            placeholder="Ou busque por um momento"
-          />
-        </form>
         <div className="feed-container">
+      <h1>Veja o que estão compartilhando 💛</h1>
           <div className="moments-container">
             <ul>
-              {feed?.length ? (
+              {
                 feed.map(
                   ({
                     id,
@@ -46,30 +37,38 @@ export default function FeedView() {
                     username,
                     date,
                     imageUrl,
-                    likes,
                     comments,
                   }) => (
-                    <MomentCard
-                      key={id}
+                    <Card5
                       id={id}
                       title={title}
                       description={description}
-                      user={username}
+                      imgUrl={imageUrl}
+                      username={username}
                       date={date}
-                      imageUrl={imageUrl}
-                      likes={likes}
                       comments={comments}
                     />
+
+                    // <MomentCard
+                    //   key={id}
+                    //   id={id}
+                    //   title={title}
+                    //   description={description}
+                    //   user={username}
+                    //   date={date}
+                    //   imageUrl={imageUrl}
+                    //   likes={likes}
+                    //   comments={comments}
+                    // />
                   )
                 )
-              ) : (
-                <p>Carregando...</p>
-              )}
-              <InfiniteScroll callback={()=> setCurrentPage((prevPage) => prevPage + 1)} />
+              }
+              <InfiniteScroll
+                callback={() => setCurrentPage((prevPage) => prevPage + 1)}
+              />
             </ul>
           </div>
         </div>
       </div>
-    </div>
   );
 }

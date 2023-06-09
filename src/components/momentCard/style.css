@@ -6,17 +6,36 @@
   top: 0;
   max-width: 80%;
   margin: 0 auto;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+:where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-first,
+:where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-second {
+  color: rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+:where(.css-dev-only-do-not-override-3hfdvs).ant-card .ant-card-body {
+  padding: 0;
+}
+
+.moment-wrapper {
+  display: flex;
+  width: 400px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
+  margin: 0 auto;
+  margin-bottom: 1em;
 }
 
 .moment {
-  border: 1px solid #e6e6e6;
   border-radius: 5px;
   width: 402px;
   height: 600px;
   margin-bottom: 1em;
   text-align: center;
+  background-color: #f7e1a4;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
 }
 
 .moment img {
