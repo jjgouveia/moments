@@ -4,7 +4,6 @@ import FeedView from "../pages/Feed/FeedView";
 import LoginView from "../pages/Login/LoginView";
 import MomentDetailsView from "../pages/MomentDetails/MomentDetailsView";
 import Profile from "../pages/Profile";
-import SignUp from "../pages/SignUp";
 import Users from "../pages/Users";
 import ErrorBoundary from "../services/ErrorBoundary";
 
@@ -24,14 +23,6 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginView />,
     },
-    {
-        path: "/cadastrar",
-        element: <SignUp />,
-    },
-    {
-        path: "/create-profile",
-        element: <SignUp />,
-    }
 ]);
 
 

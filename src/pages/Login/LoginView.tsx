@@ -1,11 +1,10 @@
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input, Spacer, Text } from "@nextui-org/react";
-import { Button, Drawer, message, theme } from "antd";
+import { Button, message, theme } from "antd";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/moments.png";
+import SignUpDrawer from "../../components/SignUpDrawer";
 import SubmitButton from "../../components/SubmitButton";
 import MomentsLogo from "../../components/momentsLogo/MomentsLogo";
 import { login } from "../../services/authentication.service";
@@ -128,97 +127,21 @@ const LoginView: React.FC = () => {
                 }}
               />{" "}
             </form>
-            {/*
-          <div className="register-wrapper">
-            <p>Ainda não tem uma conta?</p>
-            <a href="/cadastrar">Cadastre-se</a>
-          </div> */}
-
-            <div></div>
-            <Drawer
-              title="Basic Drawer"
-              placement="bottom"
-              closable={true}
-              open={open}
-              getContainer={false}
-              onClose={onClose}
-
-              style={{
-                backgroundColor: "#f7e1a4",
-              }}
-
-              maskStyle={{
-                backgroundColor: "transparent",
-              }}
-
-              bodyStyle={{
-                height: "156px",
-                position: "absolute",
-                bottom: 0,
-                display: "flex",
-                flexDirection: "column",
-                flexWrap: "wrap",
-                overflow: 'hidden',
-                padding: 10,
-                width: "257px",
-                backgroundColor: "#f7e1a4"
-
-
-              }}
-            >
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}>
-                <button style={{
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  width: "fit-content",
-                }}
-                onClick={onClose}
-                >
-                  <FontAwesomeIcon icon={faClose} />
-                </button>
-              </div>
-              <form action="" style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}>
-                <input type="text" name="" id="" style={{
-                  marginBottom: 10,
-                  width: "100%",
-                }}/>
-                <input type="text" name="" id="" style={{
-                  marginBottom: 10,
-                  width: "100%",
-                }}/>
-                <input type="text" name="" id="" style={{
-                  marginBottom: 10,
-                  width: "100%",
-                }}/>
-
-
-
-              </form>
-            </Drawer>
-
+            <SignUpDrawer open={open} onClose={onClose} />
           </div>
           <div className="register-wrapper">
-            {
-              !open ? <p>Ainda não tem uma conta?</p> : <p>Preparado para o novo?</p>
-            }
-        <Button
-          type="primary"
-          onClick={open ? () => message.success("Oi") : showDrawer}
-          style={{
-          }}
-        >
-          {
-            !open ? 'Clique aqui' : 'Cadastrar'
-          }
-        </Button>
+            {!open ? (
+              <p>Ainda não tem uma conta?</p>
+            ) : (
+              <p>Preparado para o novo?</p>
+            )}
+            <Button
+              type="primary"
+              onClick={open ? () => message.success("Oi") : showDrawer}
+              style={{}}
+            >
+              {!open ? "Clique aqui" : "Cadastrar"}
+            </Button>
           </div>
         </div>
       </div>

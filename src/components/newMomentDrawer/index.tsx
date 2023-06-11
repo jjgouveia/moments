@@ -84,7 +84,9 @@ const NewMomentDrawer: React.FC = () => {
       </Button>
       <Drawer
         title="Compartilhe um momento"
-        width={720}
+        width={600}
+
+
         onClose={onClose}
         visible={open}
         bodyStyle={{ paddingBottom: 80 }}
