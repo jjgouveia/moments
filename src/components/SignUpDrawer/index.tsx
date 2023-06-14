@@ -172,7 +172,7 @@ const SignUpDrawer: React.FC = () => {
                   helperColor={
                     passwordHelper.color as "default" | "success" | "error"
                   }
-                  helperText={passwordHelper.text}
+                  // helperText={passwordHelper.text}
                   placeholder="Sua senha"
                   {...register("password", {
                     required: "A senha é obrigatória",

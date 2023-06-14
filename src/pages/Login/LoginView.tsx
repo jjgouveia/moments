@@ -1,6 +1,6 @@
 import { Input, Spacer, Text } from "@nextui-org/react";
 import { theme } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/moments.png";
@@ -50,15 +50,6 @@ const LoginView: React.FC = () => {
   };
 
   const { token } = theme.useToken();
-  const [open, setOpen] = useState(false);
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
 
   const containerStyle: React.CSSProperties = {
     position: "relative",

@@ -10,9 +10,14 @@
   scroll-behavior: smooth;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 html {
   box-sizing: border-box;
-  background-color: #f5f5d3;
 }
 
 a {
@@ -38,12 +43,6 @@ form [placeholder] {
 
 .fa-solid {
   margin-right: 0.2em;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
 }
 
 a {

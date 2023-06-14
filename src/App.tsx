@@ -9,7 +9,7 @@ function App() {
     <>
       <Header />
       {/* <NewHeader /> */}
-      <main className="container">
+      <main className="app-container">
         <Outlet />
       </main>
     </>

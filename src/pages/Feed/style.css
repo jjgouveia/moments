@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0 auto;
+  width: 86.5%;
+  border: 1px solid blue;
 }
 
 .home-container h1 {
@@ -13,7 +14,6 @@
 
 .search-container input {
   padding: 0.5em;
-  width: 100%;
   text-align: center;
 }
 
@@ -22,8 +22,8 @@
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  width: 80%;
   overflow: hidden;
+  padding-left: 12px;
 }
 
 li {
