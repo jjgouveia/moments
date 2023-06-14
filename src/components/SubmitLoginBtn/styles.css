@@ -1,0 +1,67 @@
+.cssbuttons-io-button {
+  margin-top: 0.5rem;
+  background: #f5a524;
+  color: rgb(0, 0, 0);
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 0.9em;
+  border: none;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #f5a524;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+}
+
+.cssbuttons-io-button .icon {
+  background-color: #f5f5d3;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.3em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #f5a524;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:disabled {
+  background-color: #f5f5d3;
+  color: rgb(148, 148, 148);
+  box-shadow: 0 0 1.6em -0.6em #9f9f9f;
+  cursor: not-allowed;
+}
+
+.cssbuttons-io-button:disabled .icon {
+  box-shadow: inset 0.1em 0.1em 0.6em 0.2em #9f9f9f;
+}
+
+.cssbuttons-io-button:disabled .icon svg {
+  color: rgb(104, 104, 104);
+  box-shadow: 0 0 1.6em -0.6em #9f9f9f;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.5em;
+  transition: transform 0.3s;
+  color: #f5a524;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
