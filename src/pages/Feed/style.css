@@ -3,7 +3,6 @@
   justify-content: center;
   flex-direction: column;
   width: 86.5%;
-  border: 1px solid blue;
 }
 
 .home-container h1 {
@@ -23,7 +22,8 @@
   flex-direction: column;
   margin: 0 auto;
   overflow: hidden;
-  padding-left: 12px;
+  /* padding-left: 12px; */
+  align-items: center;
 }
 
 li {

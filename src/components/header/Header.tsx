@@ -82,7 +82,11 @@ function Header() {
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
-            }}
+              border: "1px solid red"
+            }
+
+
+          }
           >
             <Dropdown placement="right-top">
               <Navbar.Item>

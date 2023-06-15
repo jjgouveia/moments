@@ -4,9 +4,10 @@
   flex-wrap: wrap;
   position: relative;
   top: 0;
-  max-width: 80%;
   margin: 0 auto;
+  height: fit-content;
   justify-content: center;
+  align-items: center;
 }
 
 :where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-first,
@@ -21,22 +22,44 @@
 }
 
 .moment-wrapper {
+  position: relative;
+  right: 0.21rem;
   display: flex;
-  width: 400px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
-  margin: 0 auto;
-  margin-bottom: 1em;
+  border-radius: 5px;
+  /* padding-bottom: 1em; */
+  min-width: 400px;
+  margin: 0;
 }
 
-.moment {
+.nextui-c-BDLTQ {
+  --nextui--cardColor: var(--nextui-colors-backgroundContrast);
+  --nextui--cardTextColor: var(--nextui-colors-text);
+  margin: 0px;
+  padding: 0px;
   border-radius: 5px;
-  width: 402px;
+  background: var(--nextui--cardColor);
+  color: var(--nextui--cardTextColor);
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+/* .moment {
+  width: 500px;
   height: 600px;
   margin-bottom: 1em;
   text-align: center;
   background-color: #f7e1a4;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
-}
+} */
 
 .moment img {
   margin-bottom: 1em;

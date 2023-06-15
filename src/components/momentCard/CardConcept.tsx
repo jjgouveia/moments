@@ -9,6 +9,7 @@ import { addLike, hasLiked, removeLike } from "../../services/like.service";
 import { getProfile } from "../../services/profile.service";
 import CommentModal from "../commentModal";
 import PreviewComments from "../previewComments/index";
+import "./style.css";
 
 
 export const Card5 = ({
@@ -78,9 +79,6 @@ export const Card5 = ({
     navigate(`/moment/${momentId}`);
   };
 
-
-
-
   useEffect(() => {
     const getInfo = async () => getProfile(token, username);
     getInfo().then((res) => {
@@ -101,19 +99,12 @@ export const Card5 = ({
     hasAlreadyLiked();
   }, [iconLike, id]);
 
-  // const handleOpenModal = () => {
-  //   setModalIsOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setModalIsOpen(false);
-  // };
 
   return (
-    <List>
-    <Card className="moment-wrapper">
-      { cardLoaded ? (<Card
-        css={{ w: "400px", h: "fit-content", backgroundColor: "#f5f5d3" }}
+    <List.Item>
+      <Card className="moment-wrapper">
+      {cardLoaded ? (<Card
+        css={{ w: "100%", h: "fit-content", backgroundColor: "#f5f5d3" }}
         key={id}
       >
         <Card.Header
@@ -134,8 +125,7 @@ export const Card5 = ({
                     css={{ bg: "black", br: "50%" }}
                     height={40}
                     width={40}
-                    alt={username + " profile picture"}
-                  />
+                    alt={username + " profile picture"} />
                 </Col>
                 <Col
                   css={{
@@ -194,14 +184,10 @@ export const Card5 = ({
         <Card.Body css={{ p: 0 }}>
           <AntdCard
             hoverable
-            cover={<Image src={imgUrl} alt="moment" fallback="https://via.placeholder.com/400" style={
-              {
-                borderRadius: "0",
-              }
-            }
-            preview={false}
-            />}
-          />
+            cover={<Image src={imgUrl} alt="moment" fallback="https://via.placeholder.com/400" style={{
+              borderRadius: "0",
+            }}
+              preview={false} />} />
         </Card.Body>
         <Card.Footer
           isBlurred
@@ -251,7 +237,7 @@ export const Card5 = ({
                   onPress={() => goToMoment(id)}
                 >
                   <Text
-                    css={{ color: "inherit" }}
+                    css={{ color: "#dec129" }}
                     size={12}
                     weight="bold"
                     transform="uppercase"
@@ -265,15 +251,14 @@ export const Card5 = ({
         </Card.Footer>
         <Collapse
           title={title}
-          css={{ marginTop: "-65px", pl: "15px", zIndex: -2}}
+          css={{ marginTop: "-65px", pl: "15px", zIndex: -2, border: "1px solid #e6e6e6" }}
           divider={false}
           shadow
         >
           <Text css={{ p: "10px" }}>{description}</Text>
         </Collapse>
         <PreviewComments commentList={comments} isFeedPreview={true} />
-      </Card>) : (<Skeleton active avatar paragraph={{rows: 5}}/>)}
-    </Card>
-    </List>
+      </Card>) : (<Skeleton active avatar paragraph={{ rows: 5 }} />)}
+    </Card></List.Item>
   );
 };

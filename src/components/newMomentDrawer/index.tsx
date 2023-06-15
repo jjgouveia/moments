@@ -3,7 +3,6 @@ import { Button, Drawer, Input, Space, notification } from "antd";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ToastHands from "../../assets/toast-hands.svg";
-import { createMoment } from "../../services/moment.service";
 import { MomentFornData } from "../../types/MomentFormData";
 
 import "./styles.css";
@@ -12,8 +11,10 @@ const NewMomentDrawer: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+  const [title, setTitle] = useState("");
+  const [caption, setcaption] = useState("");
 
-  const { register, handleSubmit, reset, setValue } =
+  const { handleSubmit, reset, setValue } =
     useForm<MomentFornData>();
 
   const showDrawer = () => {
@@ -21,10 +22,30 @@ const NewMomentDrawer: React.FC = () => {
     setLoading(true);
   };
 
+  const clearInputs = () => {
+    reset();
+    setTitle("");
+    setcaption("");
+    setPreviewImage(undefined);
+  };
+
   const onClose = () => {
+    clearInputs();
     setOpen(false);
     setLoading(false);
-    reset();
+  };
+
+  const inputHandler = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+
+    if (name === "title") {
+      setTitle(value);
+      setValue("title", value, { shouldValidate: true });
+    };
+    if (name === "caption") {
+      setcaption(value);
+      setValue("caption", value, { shouldValidate: true });
+    };
   };
 
   const openNotification = () => {
@@ -45,12 +66,12 @@ const NewMomentDrawer: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<MomentFornData> = async (data) => {
-    const { token } = JSON.parse(localStorage.getItem("token") || "{}");
-    const { status } = await createMoment(token, data);
+    // const { token } = JSON.parse(localStorage.getItem("token") || "{}");
+    // const { status } = await createMoment(token, data);
 
-    if (status === 201) {
-      openNotification();
-    }
+    // if (status === 201) {
+    //   openNotification();
+    // }
   };
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -113,14 +134,17 @@ const NewMomentDrawer: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <div className="form-entries">
             <div className="form-group">
-              <label>Título</label>
               <Input
-                {...register("title")}
+                placeholder="Título"
+                name="title"
+                id="title"
                 allowClear
                 maxLength={52}
                 showCount
-                type="text"
                 required
+                onChange={(e) => inputHandler(e)}
+                value={title}
+
               />
             </div>
             <div className="form-group">
@@ -130,7 +154,9 @@ const NewMomentDrawer: React.FC = () => {
                 allowClear
                 maxLength={512}
                 style={{ height: 120, resize: "none" }}
-                {...register("caption")}
+                name="caption"
+                onChange={(e) => inputHandler(e)}
+                value={caption}
               />
             </div>
             <div className="form-group">
