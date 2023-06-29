@@ -1,10 +1,20 @@
-import { Button, Drawer, Input, Space, notification } from "antd";
+import {
+  Button,
+  Drawer,
+  Empty,
+  Input,
+  Popconfirm,
+  Space,
+  message,
+  notification,
+} from "antd";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ToastHands from "../../assets/toast-hands.svg";
 import { MomentFornData } from "../../types/MomentFormData";
 
+import { createMoment } from "../../services/moment.service";
 import "./styles.css";
 
 const NewMomentDrawer: React.FC = () => {
@@ -12,10 +22,9 @@ const NewMomentDrawer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const [title, setTitle] = useState("");
-  const [caption, setcaption] = useState("");
+  const [caption, setCaption] = useState("");
 
-  const { handleSubmit, reset, setValue } =
-    useForm<MomentFornData>();
+  const { handleSubmit, reset, setValue } = useForm<MomentFornData>();
 
   const showDrawer = () => {
     setOpen(true);
@@ -25,7 +34,7 @@ const NewMomentDrawer: React.FC = () => {
   const clearInputs = () => {
     reset();
     setTitle("");
-    setcaption("");
+    setCaption("");
     setPreviewImage(undefined);
   };
 
@@ -33,20 +42,29 @@ const NewMomentDrawer: React.FC = () => {
     clearInputs();
     setOpen(false);
     setLoading(false);
+
   };
 
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
 
-    if (name === "title") {
-      setTitle(value);
-      setValue("title", value, { shouldValidate: true });
-    };
-    if (name === "caption") {
-      setcaption(value);
-      setValue("caption", value, { shouldValidate: true });
-    };
-  };
+  type InputHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+
+  const inputHandler: InputHandler = useMemo(
+    () => (event) => {
+      const { name, value } = event.target;
+
+      if (name === 'title') {
+        setTitle(value);
+      }
+      if (name === 'caption') {
+        setCaption(value);
+      }
+      setValue(name as "title" | "caption", value, { shouldValidate: true });
+    },
+    [setTitle, setCaption, setValue]
+  );
+
 
   const openNotification = () => {
     api.open({
@@ -62,16 +80,17 @@ const NewMomentDrawer: React.FC = () => {
         height: "fit-content",
         width: "fit-content",
       },
+      duration: 3,
     });
   };
 
   const onSubmit: SubmitHandler<MomentFornData> = async (data) => {
-    // const { token } = JSON.parse(localStorage.getItem("token") || "{}");
-    // const { status } = await createMoment(token, data);
+    const { token } = JSON.parse(localStorage.getItem("token") || "{}");
+    const { status } = await createMoment(token, data);
 
-    // if (status === 201) {
-    //   openNotification();
-    // }
+    if (status === 201) {
+      openNotification();
+    }
   };
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -93,12 +112,20 @@ const NewMomentDrawer: React.FC = () => {
     }
   };
 
+  const confirm = () => {
+    onClose();
+  };
+
+  const cancel = () => {
+    message.success("Você fez uma ótima escolha!", 1.5);
+  };
+
   return (
     <>
       <Button
-      className="header-button-wrapper"
-      onClick={showDrawer}
-      loading={loading}
+        className="header-button-wrapper"
+        onClick={showDrawer}
+        loading={loading}
       >
         <i className="fa-solid fa-champagne-glasses" />
         <span>Postar</span>
@@ -106,19 +133,30 @@ const NewMomentDrawer: React.FC = () => {
       <Drawer
         title="Compartilhe um momento"
         width={600}
-
-
         onClose={onClose}
-        visible={open}
+        open={open}
         bodyStyle={{ paddingBottom: 80 }}
-        style={
-          {
-            background: "#F0F2F5",
-          }
-        }
+        style={{
+          background: "#F0F2F5",
+        }}
+        closable={false}
+        keyboard={false}
         footer={
           <Space>
-            <Button onClick={onClose}>Cancelar</Button>
+            {title.length || caption.length || previewImage ? (
+              <Popconfirm
+                title="Cancelar compartilhamento?"
+                description="Todos as informações serão perdidas."
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Sim"
+                cancelText="Claro que não!"
+              >
+                <Button>Cancelar</Button>
+              </Popconfirm>
+            ) : (
+              <Button onClick={onClose}>Cancelar</Button>
+            )}
             <Button onClick={handleSubmit(onSubmit)} type="primary">
               Compartilhar
             </Button>
@@ -127,8 +165,13 @@ const NewMomentDrawer: React.FC = () => {
       >
         {contextHolder}
         <div className="preview-image-container">
-          {previewImage && (
+          {previewImage ? (
             <img src={previewImage} alt="Preview" className="preview-image" />
+          ) : (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Sem Foto"
+            />
           )}
         </div>
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -144,7 +187,6 @@ const NewMomentDrawer: React.FC = () => {
                 required
                 onChange={(e) => inputHandler(e)}
                 value={title}
-
               />
             </div>
             <div className="form-group">
@@ -161,12 +203,18 @@ const NewMomentDrawer: React.FC = () => {
             </div>
             <div className="form-group">
               <label>Foto</label>
+              <div className="file-upload">
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
                 ref={fileInputRef}
+                id="customFileInput"
               />
+                <label htmlFor="customFileInput" className="custom-file-label">
+                  Escolher arquivo
+                </label>
+              </div>
             </div>
           </div>
         </form>

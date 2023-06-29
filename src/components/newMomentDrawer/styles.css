@@ -86,3 +86,24 @@
     height: 200px;
   }
 }
+
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border: 1px solid red;
+}
+
+.file-upload input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.custom-file-label {
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid blue;
+}
