@@ -1,0 +1,41 @@
+.accordion {
+  border: 1px solid #ccc;
+  margin-top: -53px;
+  overflow: hidden;
+  margin-bottom: 0.2em;
+}
+
+.accordion-header {
+  background-color: #f5f5f5;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-header h3 {
+  margin: 0;
+}
+
+.accordion-header .icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.accordion.open .icon {
+  transform: rotate(360deg);
+}
+
+.accordion-content {
+  background-color: #fff;
+  padding: 0 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion.open .accordion-content {
+  max-height: 500px;
+}

@@ -4,6 +4,8 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/moments.png";
+import Footer from "../../components/Footer";
+import Particle from "../../components/Particle";
 import SignUpDrawer from "../../components/SignUpDrawer";
 import SubmitLoginButton from "../../components/SubmitLoginBtn";
 import MomentsLogo from "../../components/momentsLogo/MomentsLogo";
@@ -22,6 +24,23 @@ const LoginView: React.FC = () => {
     handleSubmit,
     watch,
   } = useForm<LoginData>();
+
+  // const [imageUrl, setImageUrl] = useState("");
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch("https://picsum.photos/300/420/?blur");
+  //     setImageUrl(response.url);
+  //   }
+
+  //   fetchData();
+  // }, []);
+
+
+  // console.log();
+
+
+
 
 
   const redirect = useNavigate();
@@ -58,8 +77,9 @@ const LoginView: React.FC = () => {
   };
 
   return (
-      <div className="login-container">
-        <div className="login-wrapper">
+      <div className="login-container" >
+        <Particle />
+        <div className="login-wrapper" >
           <div className="login-slogan">
             <MomentsLogo size={52} />
             <Text h3 size={25}>
@@ -152,9 +172,7 @@ const LoginView: React.FC = () => {
             </div> */}
           </div>
         </div>
-        <div className="login-footer">
-          <p>© 2021 Moments. Todos os direitos reservados.</p>
-        </div>
+          <Footer />
       </div>
   );
 };

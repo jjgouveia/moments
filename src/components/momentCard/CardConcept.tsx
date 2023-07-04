@@ -1,4 +1,4 @@
-import { Button, Card, Col, Collapse, Row, Text } from "@nextui-org/react";
+import { Button, Card, Col, Row, Text } from "@nextui-org/react";
 import { Card as AntdCard, Image, List, Skeleton } from "antd";
 import "boxicons";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { ICommentResponse } from "../../interfaces/ICommentReponse";
 import { ProfileInfo } from "../../interfaces/IProfileInfo";
 import { addLike, hasLiked, removeLike } from "../../services/like.service";
 import { getProfile } from "../../services/profile.service";
+import OwnAccordion from "../OwnAccordion";
 import CommentModal from "../commentModal";
 import PreviewComments from "../previewComments/index";
 import "./style.css";
@@ -249,14 +250,7 @@ export const Card5 = ({
             </Col>
           </Row>
         </Card.Footer>
-        <Collapse
-          title={title}
-          css={{ marginTop: "-65px", pl: "15px", zIndex: -2, border: "1px solid #e6e6e6" }}
-          divider={false}
-          shadow
-        >
-          <Text css={{ p: "10px" }}>{description}</Text>
-        </Collapse>
+        <OwnAccordion title={title} content={description}/>
         <PreviewComments commentList={comments} isFeedPreview={true} />
       </Card>) : (<Skeleton active avatar paragraph={{ rows: 5 }} />)}
     </Card></List.Item>
