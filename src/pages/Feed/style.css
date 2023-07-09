@@ -1,8 +1,7 @@
 .home-container {
-  display: flex;
-  justify-content: center;
   flex-direction: column;
-  width: 86.5%;
+  border: 1px solid #00ff33;
+  width: 85.9%;
 }
 
 .home-container h1 {
@@ -22,7 +21,6 @@
   flex-direction: column;
   margin: 0 auto;
   overflow: hidden;
-  /* padding-left: 12px; */
   align-items: center;
 }
 

@@ -1,5 +1,5 @@
 import { Button, Card, Col, Row, Text } from "@nextui-org/react";
-import { Card as AntdCard, Image, List, Skeleton } from "antd";
+import { Card as AntdCard, Divider, Image, List, Skeleton } from "antd";
 import "boxicons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -102,7 +102,7 @@ export const Card5 = ({
 
 
   return (
-    <List.Item>
+    <List.Item className="card-list-item">
       <Card className="moment-wrapper">
       {cardLoaded ? (<Card
         css={{ w: "100%", h: "fit-content", backgroundColor: "#f5f5d3" }}
@@ -253,6 +253,8 @@ export const Card5 = ({
         <OwnAccordion title={title} content={description}/>
         <PreviewComments commentList={comments} isFeedPreview={true} />
       </Card>) : (<Skeleton active avatar paragraph={{ rows: 5 }} />)}
-    </Card></List.Item>
+    </Card>
+    <Divider />
+    </List.Item>
   );
 };

@@ -1,3 +1,7 @@
+:root {
+  --divider-color: #878686;
+}
+
 .moments-container {
   display: flex;
   flex-direction: column;
@@ -8,6 +12,7 @@
   height: fit-content;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 :where(.css-dev-only-do-not-override-3hfdvs).ant-rate .ant-rate-star-first,
@@ -21,19 +26,27 @@
   padding: 0;
 }
 
+.card-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 470px;
+  height: auto;
+  transition: all 0.2s;
+}
+
 .moment-wrapper {
   position: relative;
-  right: 0.21rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
   border-radius: 5px;
   /* padding-bottom: 1em; */
-  min-width: 400px;
-  max-width: 400px;
+  width: 470px;
   margin: 0;
+  border: 1px solid #dec129;
 }
 
 .nextui-c-BDLTQ {
@@ -62,10 +75,12 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.529);
 } */
 
-.moment img {
+.moment-wrapper img[alt="moment"] {
   margin-bottom: 1em;
-  width: 400px;
-  max-height: 400px;
+  object-fit: contain;
+  width: 468px;
+  max-height: 667px;
+  overflow: hidden;
 }
 
 .moment h3,

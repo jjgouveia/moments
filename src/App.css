@@ -3,19 +3,21 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-left: 180px;
   transition: all 0.4s;
   /* background-color: #f2e7ca; */
-  background: url("./assets/moments_bg_3.png");
+  background-image: url("./assets/moments_bg_3.png");
+  background-attachment: fixed;
   position: absolute;
   top: 0;
+  left: 179px;
   scroll-behavior: smooth;
+  border: 1px dotted red;
 }
 
 @media (width < 920px) {
   .app-container {
-    transition: margin 0.4s;
-    margin-left: 51px;
+    transition: left 0.4s;
+    left: 51px;
   }
 }
 
@@ -29,6 +31,6 @@
   .app-container {
     transition: padding 0.4s;
     padding-top: 40px;
-    margin-left: unset;
+    left: unset;
   }
 }
