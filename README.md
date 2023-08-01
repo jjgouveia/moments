@@ -28,8 +28,5 @@ Para rodar o backend, faça o clone do repositório, execute o docker-compose.ym
 ## Autor
 Jarbas Gouveia
 
-## Agradecimentos
-Agradeço à SysMap por me proporcionar a oportunidade de aprender e desenvolver esse projeto.
-
 
 
